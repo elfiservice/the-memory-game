@@ -1,3 +1,16 @@
 body {
-    background-color: brown;
+    background-color: rgba(38, 102, 145, 0.87);
 }
+
+table, tr, td {
+    border: 1px;
+    border-style: solid;
+    border-spacing: 20px;
+}
+
+td {
+    margin: 30px;
+    padding: 20px;
+    cursor: pointer;
+}
+
