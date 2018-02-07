@@ -11,6 +11,10 @@ $(function() {
                 default: console.log('Error Level not passed');
                 
             }
+        },
+        currentCardsSelected: {
+            'card1' : '',
+            'card2' : ''
         }
     }
 
@@ -21,10 +25,12 @@ $(function() {
         getLevel: (level) => {
             let cardsArray = model.level(level);
             //Sorting an Array in Random Order
-            return cardsArray.sort(function(a, b){return 0.5 - Math.random()});
-     
-            
+            return cardsArray.sort(function(a, b){return 0.5 - Math.random()});            
         },
+        getCurrentsCards: () => {
+            return model.currentCardsSelected;
+        },
+        
 
         init: () => {
             view.init();
@@ -39,11 +45,56 @@ $(function() {
             //toDo: find the best algoritm to divide correct distribuition for the memory game
             const numRows = Math.round(numeberOfCards/4);
             const numCol = numRows;
-            
-            
+                
             //get instance for the Grid
             let Grid = octupus.getGrid(numRows, numCol);
             let gridElement = document.getElementById('game_grid');
+            //built the game structure
+            let fragmentBuilded = view.buildGame(Grid, cardsArray);
+            gridElement.appendChild(fragmentBuilded);
+
+            //listen a click on the card
+            gridElement.onclick = function(e) {
+
+                let idCardHideClicked = e.target.id;
+                let classCardHideClicked = e.target.classList.value;
+                let currentsCards = octupus.getCurrentsCards();
+
+                if(idCardHideClicked != "game_grid" && classCardHideClicked == "card_hided") {
+                    console.log(currentsCards.card1);
+                    console.log(currentsCards.card2);
+
+                   if(currentsCards.card1 == "" && currentsCards.card2 == "") {
+                        let card = showTheCard(idCardHideClicked);
+                        currentsCards.card1 = card.innerText;
+
+                    } else if (currentsCards.card1 != "" && currentsCards.card2 == "") {
+                        let card = showTheCard(idCardHideClicked);
+                        currentsCards.card2 = card.innerText;
+                    }
+                }
+
+                function showTheCard(idCardHideClicked) {
+                    let idElementToShow = idCardHideClicked.split("-");
+                    let cardToShow = document.getElementById(idElementToShow[0]);               
+                    cardToShow.classList.remove("hide");
+
+                    let cardHided = document.getElementById(idCardHideClicked);
+                    cardHided.classList.add("hide");
+                    
+                    return cardToShow;
+                }
+
+                
+            };
+
+            // let t0 =  performance.now();
+
+        //     let t1 =  performance.now();
+        //  console.log(t1 - t0);
+      
+        },
+        buildGame: (Grid, cards) => {
             //improved the performance of 0.312ms to 0.195ms using the fragment
             let fragment = document.createDocumentFragment();
             let numberCardsCount = 0;
@@ -53,7 +104,7 @@ $(function() {
                     let createdCard = document.createElement("td");
                     createdCard.setAttribute("class", "hide card");
                     createdCard.setAttribute("id", r+''+c);
-                    createdCard.innerText = cardsArray[numberCardsCount];
+                    createdCard.innerText = cards[numberCardsCount];
                     createRow.appendChild(createdCard);
 
                     let createdCardHide = document.createElement("td");
@@ -67,35 +118,8 @@ $(function() {
                 fragment.appendChild(createRow);
                 
             }
-            gridElement.appendChild(fragment);
-            
-  
-            gridElement.onclick = function(e) {
-                console.log(e.target.id);
-               
-                let idCardHideClicked = e.target.id;
 
-                if(idCardHideClicked != "game_grid") { 
-                    let idElementToShow = idCardHideClicked.split("-");
-                    let cardToShow = document.getElementById(idElementToShow[0]);               
-                    cardToShow.classList.remove("hide");
-
-                    let cardHided = document.getElementById(idCardHideClicked);
-                    cardHided.classList.add("hide");
-                }
-                
-            };
-
-            
-            
-
-            // let t0 =  performance.now();
-
-        //     let t1 =  performance.now();
-        //  console.log(t1 - t0);
-         
-
-            
+            return fragment;
         }
     }
 
