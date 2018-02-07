@@ -51,6 +51,8 @@ $(function() {
                 let createRow = document.createElement("tr");
                 for(let c = 1; c <= Grid.col; c++) {
                     let createdCol = document.createElement("td");
+                    createdCol.setAttribute("class", "card");
+                    createdCol.setAttribute("id", r+''+c);
                     createdCol.innerText = cardsArray[numberCardsCount];
                     createRow.appendChild(createdCol);
                     numberCardsCount++;
@@ -60,7 +62,13 @@ $(function() {
                 
             }
             gridElement.appendChild(fragment);
+            
+  
+            gridElement.onclick = function(e) {
+                console.log(e.target.id);             
+            };
 
+            
             
 
             // let t0 =  performance.now();
