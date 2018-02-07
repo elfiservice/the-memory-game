@@ -50,11 +50,17 @@ $(function() {
             for(let r = 1; r <= Grid.row; r++) {
                 let createRow = document.createElement("tr");
                 for(let c = 1; c <= Grid.col; c++) {
-                    let createdCol = document.createElement("td");
-                    createdCol.setAttribute("class", "card");
-                    createdCol.setAttribute("id", r+''+c);
-                    createdCol.innerText = cardsArray[numberCardsCount];
-                    createRow.appendChild(createdCol);
+                    let createdCard = document.createElement("td");
+                    createdCard.setAttribute("class", "hide card");
+                    createdCard.setAttribute("id", r+''+c);
+                    createdCard.innerText = cardsArray[numberCardsCount];
+                    createRow.appendChild(createdCard);
+
+                    let createdCardHide = document.createElement("td");
+                    createdCardHide.setAttribute("class", "card_hided");
+                    createdCardHide.setAttribute("id", r+''+c +'-hide');
+                    createdCardHide.innerText = "?";
+                    createRow.appendChild(createdCardHide);
                     numberCardsCount++;
                 }
                 
@@ -65,7 +71,19 @@ $(function() {
             
   
             gridElement.onclick = function(e) {
-                console.log(e.target.id);             
+                console.log(e.target.id);
+               
+                let idCardHideClicked = e.target.id;
+
+                if(idCardHideClicked != "game_grid") { 
+                    let idElementToShow = idCardHideClicked.split("-");
+                    let cardToShow = document.getElementById(idElementToShow[0]);               
+                    cardToShow.classList.remove("hide");
+
+                    let cardHided = document.getElementById(idCardHideClicked);
+                    cardHided.classList.add("hide");
+                }
+                
             };
 
             
