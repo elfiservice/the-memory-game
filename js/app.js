@@ -13,6 +13,8 @@ $(function() {
             }
         },
         currentCardsSelected: {
+            'idCard1' : '',
+            'idCard2' : '',
             'card1' : '',
             'card2' : ''
         }
@@ -61,16 +63,21 @@ $(function() {
                 let currentsCards = octupus.getCurrentsCards();
 
                 if(idCardHideClicked != "game_grid" && classCardHideClicked == "card_hided") {
-                    console.log(currentsCards.card1);
-                    console.log(currentsCards.card2);
+                    // console.log(currentsCards.card1);
+                    // console.log(currentsCards.card2);
 
                    if(currentsCards.card1 == "" && currentsCards.card2 == "") {
                         let card = showTheCard(idCardHideClicked);
                         currentsCards.card1 = card.innerText;
+                        currentsCards.idCard1 = card.id;
 
                     } else if (currentsCards.card1 != "" && currentsCards.card2 == "") {
                         let card = showTheCard(idCardHideClicked);
                         currentsCards.card2 = card.innerText;
+                        currentsCards.idCard2 = card.id;
+                        //checkar match nas cartas
+                        setTimeout(checkCardsMatch, 1000);
+                      
                     }
                 }
 
@@ -83,6 +90,33 @@ $(function() {
                     cardHided.classList.add("hide");
                     
                     return cardToShow;
+                }
+
+                function checkCardsMatch() {
+                    if (currentsCards.card1 == currentsCards.card2) {
+                        console.log("match!");
+                        currentsCards.card1 = "";
+                        currentsCards.card2 = "";
+                        
+                    } else {
+                        let idCardToHide1 = currentsCards.idCard1;
+                        let idCardToHide2 = currentsCards.idCard2;
+                        let idCardToShow1 = idCardToHide1 + '-hide';
+                        let idCardToShow2 = idCardToHide2 + '-hide';
+                        let hideCard1 = document.getElementById(idCardToHide1);
+                        hideCard1.classList.add("hide");
+                        let cardToShow1 = document.getElementById(idCardToShow1);               
+                        cardToShow1.classList.remove("hide");
+
+                        let hideCard2 = document.getElementById(idCardToHide2);
+                        hideCard2.classList.add("hide");
+                        let cardToShow2 = document.getElementById(idCardToShow2);               
+                        cardToShow2.classList.remove("hide");
+
+                        currentsCards.card1 = "";
+                        currentsCards.card2 = "";
+                        
+                    }
                 }
 
                 
