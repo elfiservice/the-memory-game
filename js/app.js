@@ -13,8 +13,6 @@ $(function() {
             }
         },
         currentCardsSelected: {
-            'idCard1' : '',
-            'idCard2' : '',
             'card1' : '',
             'card2' : ''
         },
@@ -22,8 +20,11 @@ $(function() {
             'cardsShown' : 0,
             'movimentCounter' : 0
         }
+
     }
 
+
+    
     let octupus = {
         getGrid: (row, col) => {
             return new model.Grid(row, col);
@@ -36,13 +37,27 @@ $(function() {
         getCurrentsCards: () => {
             return model.currentCardsSelected;
         },
+        getCurrentContentCard1: () => {
+            return model.currentCardsSelected.card1;
+        },
+        getCurrentContentCard2: () => {
+            return model.currentCardsSelected.card2;
+        },
+        setCurrentContentCard1: (cardContent) => {
+            model.currentCardsSelected.card1 = cardContent;
+        },
+        setCurrentContentCard2: (cardContent) => {
+            model.currentCardsSelected.card2 = cardContent;
+        },
         getControlGame: () => {
             return model.controlTheGame;
         },
         
+        
 
         init: () => {
             view.init();
+            
         }
     }
 
@@ -67,20 +82,19 @@ $(function() {
 
                 let idCardHideClicked = e.target.id;
                 let classCardHideClicked = e.target.classList.value;
-                let currentsCards = octupus.getCurrentsCards();
                 let controlTheGame = octupus.getControlGame();
+                let contentCard1 = octupus.getCurrentContentCard1();
+                let contentCard2 = octupus.getCurrentContentCard2();
                 //check if only <td>/card is clicked and the card is hided
                 if(idCardHideClicked != "game_grid" && classCardHideClicked == "card_hided") {
 
-                   if(currentsCards.card1 == "" && currentsCards.card2 == "") {
+                   if(contentCard1 == "" && contentCard2 == "") {
                         let card = showTheCard(idCardHideClicked);
-                        currentsCards.card1 = card.innerText;
-                        currentsCards.idCard1 = card.id;
+                        octupus.setCurrentContentCard1(card);
 
-                    } else if (currentsCards.card1 != "" && currentsCards.card2 == "") {
+                    } else if (contentCard1 != "" && contentCard2 == "") {
                         let card = showTheCard(idCardHideClicked);
-                        currentsCards.card2 = card.innerText;
-                        currentsCards.idCard2 = card.id;
+                        octupus.setCurrentContentCard2(card);
                         //check if the cards have a match after 1s (the user need to  have time to see the two cards clicked)
                         setTimeout(checkCardsMatch, 1000);
                       
@@ -99,16 +113,17 @@ $(function() {
                 }
 
                 function checkCardsMatch() {
-                    if (currentsCards.card1 == currentsCards.card2) {
+                    let contentCard1 = octupus.getCurrentContentCard1();
+                    let contentCard2 = octupus.getCurrentContentCard2();
+                    if (contentCard1.innerText == contentCard2.innerText) {
                         console.log("match!");
-                        currentsCards.card1 = "";
-                        currentsCards.card2 = "";
+                        resetCards();
                         controlTheGame.cardsShown = controlTheGame.cardsShown + 2;
                         checkEndTheGame();
                         
                     } else {
-                        let idCardToHide1 = currentsCards.idCard1;
-                        let idCardToHide2 = currentsCards.idCard2;
+                        let idCardToHide1 = contentCard1.id;
+                        let idCardToHide2 = contentCard2.id;
                         let idCardToShow1 = idCardToHide1 + '-hide';
                         let idCardToShow2 = idCardToHide2 + '-hide';
                         let hideCard1 = document.getElementById(idCardToHide1);
@@ -121,10 +136,13 @@ $(function() {
                         let cardToShow2 = document.getElementById(idCardToShow2);               
                         cardToShow2.classList.remove("hide");
 
-                        currentsCards.card1 = "";
-                        currentsCards.card2 = "";
-                        
+                        resetCards(); 
                     }
+                }
+
+                function resetCards() {
+                    octupus.setCurrentContentCard1("");
+                    octupus.setCurrentContentCard2("");
                 }
 
                 function checkEndTheGame() {
