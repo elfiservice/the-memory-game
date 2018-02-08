@@ -17,6 +17,10 @@ $(function() {
             'idCard2' : '',
             'card1' : '',
             'card2' : ''
+        },
+        controlTheGame: {
+            'cardsShown' : 0,
+            'movimentCounter' : 0
         }
     }
 
@@ -31,6 +35,9 @@ $(function() {
         },
         getCurrentsCards: () => {
             return model.currentCardsSelected;
+        },
+        getControlGame: () => {
+            return model.controlTheGame;
         },
         
 
@@ -61,10 +68,9 @@ $(function() {
                 let idCardHideClicked = e.target.id;
                 let classCardHideClicked = e.target.classList.value;
                 let currentsCards = octupus.getCurrentsCards();
-
+                let controlTheGame = octupus.getControlGame();
+                //check if only <td>/card is clicked and the card is hided
                 if(idCardHideClicked != "game_grid" && classCardHideClicked == "card_hided") {
-                    // console.log(currentsCards.card1);
-                    // console.log(currentsCards.card2);
 
                    if(currentsCards.card1 == "" && currentsCards.card2 == "") {
                         let card = showTheCard(idCardHideClicked);
@@ -75,7 +81,7 @@ $(function() {
                         let card = showTheCard(idCardHideClicked);
                         currentsCards.card2 = card.innerText;
                         currentsCards.idCard2 = card.id;
-                        //checkar match nas cartas
+                        //check if the cards have a match after 1s (the user need to  have time to see the two cards clicked)
                         setTimeout(checkCardsMatch, 1000);
                       
                     }
@@ -97,6 +103,8 @@ $(function() {
                         console.log("match!");
                         currentsCards.card1 = "";
                         currentsCards.card2 = "";
+                        controlTheGame.cardsShown = controlTheGame.cardsShown + 2;
+                        checkEndTheGame();
                         
                     } else {
                         let idCardToHide1 = currentsCards.idCard1;
@@ -115,6 +123,13 @@ $(function() {
 
                         currentsCards.card1 = "";
                         currentsCards.card2 = "";
+                        
+                    }
+                }
+
+                function checkEndTheGame() {
+                    if(numeberOfCards == controlTheGame.cardsShown) {
+                        alert('Well done !');
                         
                     }
                 }
