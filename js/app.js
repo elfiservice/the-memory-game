@@ -147,7 +147,9 @@ $(function() {
 
                 function checkEndTheGame() {
                     if(numeberOfCards == controlTheGame.cardsShown) {
-                        alert('Well done !');
+                        let modalGameElement = document.querySelector(".modal_game");
+                        modalGameElement.classList.remove("hide");
+
                         
                     }
                 }
