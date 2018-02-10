@@ -52,7 +52,16 @@ $(function() {
         getControlGame: () => {
             return model.controlTheGame;
         },
-        
+        setCardShownCounter : (numberCards) => {
+            let cardsStored = model.controlTheGame.cardsShown;
+            model.controlTheGame.cardsShown = cardsStored + numberCards;
+        },
+        getMovimentCounter: () => {
+            return model.controlTheGame.movimentCounter;
+        },
+        setMovimenteCounter: () => {
+            model.controlTheGame.movimentCounter++;
+        },
         
 
         init: () => {
@@ -95,6 +104,10 @@ $(function() {
                     } else if (contentCard1 != "" && contentCard2 == "") {
                         let card = showTheCard(idCardHideClicked);
                         octupus.setCurrentContentCard2(card);
+                        //couting the moviments 
+                        octupus.setMovimenteCounter();
+                        console.log(octupus.getMovimentCounter());
+                        
                         //check if the cards have a match after 1s (the user need to  have time to see the two cards clicked)
                         setTimeout(checkCardsMatch, 1000);
                       
@@ -148,7 +161,14 @@ $(function() {
                 function checkEndTheGame() {
                     if(numeberOfCards == controlTheGame.cardsShown) {
                         let modalGameElement = document.querySelector(".modal_game");
+                        let modalGameContentElement = document.querySelector(".modal_game_content");
+
+                        let contentEndTheGame = '<h2>Well Done!!</h2>' +
+                                                    '<p>You finished with just ' + octupus.getMovimentCounter() + ' moviments!';
+                        modalGameContentElement.innerHTML = contentEndTheGame;
+
                         modalGameElement.classList.remove("hide");
+
 
                         
                     }
