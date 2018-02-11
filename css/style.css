@@ -49,6 +49,14 @@ td {
 }
 
 /*CONTROL DE GAME*/
+#game_control {
+    margin-bottom: 10px;
+}
+
+#game_control span {
+    margin: 0 30px;
+}
+
 #restart_game_btn {
     padding: 10px;
     cursor: pointer;

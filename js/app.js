@@ -105,6 +105,16 @@ $(function() {
             showMovesElement.innerText = octupus.getMovimentCounter() + ' moves';
             gameControlElement.appendChild(showMovesElement);
 
+            //Timer
+            let timerElement = document.createElement('span');
+            timerElement.setAttribute('id','timer');
+            timerElement.innerHTML="00<font color=#000000>:</font>00<font color=#000000>:</font>00";
+            gameControlElement.appendChild(timerElement);
+            let sHors = "0" + 0; 
+            let sMins = "0" + 0;
+            let sSecs = -1;
+
+
 
             //listen a click on the card
             gridElement.onclick = function(e) {
@@ -120,6 +130,11 @@ $(function() {
                    if(contentCard1 == "" && contentCard2 == "") {
                         let card = showTheCard(idCardHideClicked);
                         octupus.setCurrentContentCard1(card);
+
+                        //start Timer (when the first card is clicked)
+                        if(octupus.getMovimentCounter() == 0) {
+                            startTimer();
+                        }
 
                     } else if (contentCard1 != "" && contentCard2 == "") {
                         let card = showTheCard(idCardHideClicked);
@@ -207,11 +222,38 @@ $(function() {
                         
                     }
                 }
-
-
-
                 
             };
+
+            function startTimer() {
+                /*
+                Author:	Idelbrandes Goncalves de Amorim
+                Date:	02/jul/2004
+                URL: https://www.scriptbrasil.com.br/download/codigo/5373/
+                */
+                sSecs++;
+                if(sSecs == 60){
+                    sSecs = 0;
+                    sMins++;
+                    if(sMins <= 9) {
+                        sMins = "0" + sMins;
+                    }
+                }
+                if(sMins == 60){
+                    sMins = "0" + 0;
+                    sHors++;
+                    if(sHors <= 9) {
+                        sHors = "0" + sHors;
+                    }
+                }
+                if(sSecs <= 9) {
+                    sSecs = "0" + sSecs;
+                }
+
+                timerElement.innerHTML = sHors + "<font color=#000000>:</font>" + sMins + "<font color=#000000>:</font>" + sSecs;
+                setTimeout(startTimer,1000);            
+            }
+
 
             function resetGame() {
                 gridElement.innerHTML = "";
