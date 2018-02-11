@@ -62,6 +62,9 @@ $(function() {
         setMovimenteCounter: () => {
             model.controlTheGame.movimentCounter++;
         },
+        resetMovimenteCounter: () => {
+            model.controlTheGame.movimentCounter = 0;
+        },
         
 
         init: () => {
@@ -86,6 +89,23 @@ $(function() {
             let fragmentBuilded = view.buildGame(Grid, cardsArray);
             gridElement.appendChild(fragmentBuilded);
 
+            //add controls to the game 
+            let gameControlElement = document.getElementById("game_control");
+            //REstar Btn 
+            let restartGameBtnElement = '<span id="restart_game_btn"> <i class="fas fa-redo-alt"></i> </span>';
+            gameControlElement.innerHTML = restartGameBtnElement;
+            let restardGameBtn = document.getElementById('restart_game_btn');
+            restardGameBtn.onclick = function() {
+                resetGame();
+            }
+
+            //show moviments
+            let showMovesElement = document.createElement('span');
+            showMovesElement.setAttribute('id', 'show_moves');
+            showMovesElement.innerText = octupus.getMovimentCounter() + ' moves';
+            gameControlElement.appendChild(showMovesElement);
+
+
             //listen a click on the card
             gridElement.onclick = function(e) {
 
@@ -106,6 +126,10 @@ $(function() {
                         octupus.setCurrentContentCard2(card);
                         //couting the moviments 
                         octupus.setMovimenteCounter();
+                        let showMovesElementToUpdate = document.getElementById('show_moves');
+                        showMovesElementToUpdate.innerText = octupus.getMovimentCounter() + ' moves';
+
+
                         console.log(octupus.getMovimentCounter());
                         
                         //check if the cards have a match after 1s (the user need to  have time to see the two cards clicked)
@@ -164,8 +188,18 @@ $(function() {
                         let modalGameContentElement = document.querySelector(".modal_game_content");
 
                         let contentEndTheGame = '<h2>Well Done!!</h2>' +
-                                                    '<p>You finished with just ' + octupus.getMovimentCounter() + ' moviments!';
+                                                '<p>You finished with just ' + octupus.getMovimentCounter() + ' moviments!';
                         modalGameContentElement.innerHTML = contentEndTheGame;
+
+                        let resetBtnEndGameElement = document.createElement('span');
+                        resetBtnEndGameElement.setAttribute('id', 'reset_btn_end_game');
+                        resetBtnEndGameElement.innerHTML = '<i class="fas fa-redo-alt"></i>';
+                        modalGameContentElement.appendChild(resetBtnEndGameElement);
+                        let resetBtnEndGame = document.getElementById('reset_btn_end_game');
+                        resetBtnEndGame.onclick = function() {
+                            modalGameElement.classList.add("hide");
+                            resetGame();
+                        }
 
                         modalGameElement.classList.remove("hide");
 
@@ -174,8 +208,17 @@ $(function() {
                     }
                 }
 
+
+
                 
             };
+
+            function resetGame() {
+                gridElement.innerHTML = "";
+                octupus.resetMovimenteCounter();
+                octupus.init();
+            }
+
 
             // let t0 =  performance.now();
 

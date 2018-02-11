@@ -42,3 +42,8 @@ td {
     min-height: 200px;
 }
 
+/*CONTROL DE GAME*/
+#restart_game_btn {
+    padding: 10px;
+    cursor: pointer;
+}
