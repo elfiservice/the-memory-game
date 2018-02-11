@@ -1,5 +1,11 @@
 body {
     background-color: rgba(38, 102, 145, 0.87);
+    text-align: center;
+}
+
+table {
+    margin: 0 auto;
+    width: 50%;
 }
 
 table, tr, td {
@@ -40,7 +46,6 @@ td {
     position: relative;
     padding: 30px;
     min-height: 200px;
-    text-align: center;
 }
 
 /*CONTROL DE GAME*/
