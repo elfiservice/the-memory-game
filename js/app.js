@@ -113,6 +113,7 @@ $(function() {
             let sHors = "0" + 0; 
             let sMins = "0" + 0;
             let sSecs = -1;
+            let timeOut;
 
 
 
@@ -201,9 +202,11 @@ $(function() {
                     if(numeberOfCards == controlTheGame.cardsShown) {
                         let modalGameElement = document.querySelector(".modal_game");
                         let modalGameContentElement = document.querySelector(".modal_game_content");
+                        let timerEndTheGameElement = document.getElementById('timer');
 
                         let contentEndTheGame = '<h2>Well Done!!</h2>' +
-                                                '<p>You finished with just ' + octupus.getMovimentCounter() + ' moviments!';
+                                                '<p>You finished with just ' + octupus.getMovimentCounter() + ' moviments!' +
+                                                '<p>With the time of ' + timerEndTheGameElement.innerText;
                         modalGameContentElement.innerHTML = contentEndTheGame;
 
                         let resetBtnEndGameElement = document.createElement('span');
@@ -215,6 +218,8 @@ $(function() {
                             modalGameElement.classList.add("hide");
                             resetGame();
                         }
+
+                        clearTimeout(timeOut);
 
                         modalGameElement.classList.remove("hide");
 
@@ -251,9 +256,8 @@ $(function() {
                 }
 
                 timerElement.innerHTML = sHors + "<font color=#000000>:</font>" + sMins + "<font color=#000000>:</font>" + sSecs;
-                setTimeout(startTimer,1000);            
+                timeOut =  setTimeout(startTimer,1000);            
             }
-
 
             function resetGame() {
                 gridElement.innerHTML = "";
