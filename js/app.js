@@ -227,7 +227,8 @@ $(function() {
 
                         let contentEndTheGame = '<h2>Well Done!!</h2>' +
                                                 '<p>You finished with just ' + octupus.getMovimentCounter() + ' moviments!' +
-                                                '<p>With the time of ' + timerEndTheGameElement.innerText;
+                                                '<p>With the time of ' + timerEndTheGameElement.innerText + '</p>' +
+                                                '<p>'+ starRatingElement.innerText +'</p>';
                         modalGameContentElement.innerHTML = contentEndTheGame;
 
                         let resetBtnEndGameElement = document.createElement('span');
