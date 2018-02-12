@@ -19,6 +19,15 @@ $(function() {
         controlTheGame: {
             'cardsShown' : 0,
             'movimentCounter' : 0
+        },
+        starRating: function(number) {
+            switch(number) {
+                case 1: return "★☆☆"; break;
+                case 2: return "★★☆"; break;
+                case 3: return "★★★"; break;
+                default: console.log('Error, Number of Stars not provided');
+                
+            }
         }
 
     }
@@ -65,6 +74,9 @@ $(function() {
         resetMovimenteCounter: () => {
             model.controlTheGame.movimentCounter = 0;
         },
+        getStarRating: (numberOfStars) => {
+            return model.starRating(numberOfStars);
+        },
         
 
         init: () => {
@@ -85,13 +97,15 @@ $(function() {
             //get instance for the Grid
             let Grid = octupus.getGrid(numRows, numCol);
             let gridElement = document.getElementById('game_grid');
+
             //built the game structure
             let fragmentBuilded = view.buildGame(Grid, cardsArray);
             gridElement.appendChild(fragmentBuilded);
 
             //add controls to the game 
             let gameControlElement = document.getElementById("game_control");
-            //REstar Btn 
+
+            //Reset Btn 
             let restartGameBtnElement = '<span id="restart_game_btn"> <i class="fas fa-redo-alt"></i> </span>';
             gameControlElement.innerHTML = restartGameBtnElement;
             let restardGameBtn = document.getElementById('restart_game_btn');
@@ -115,6 +129,12 @@ $(function() {
             let sSecs = -1;
             let timeOut;
 
+            //Rating Stars
+            let starRatingElementCreated = document.createElement('span');
+            starRatingElementCreated.setAttribute('id','star_rating');
+            starRatingElementCreated.innerText = octupus.getStarRating(3);
+            gameControlElement.appendChild(starRatingElementCreated);
+            let starRatingElement = document.getElementById('star_rating');
 
 
             //listen a click on the card
@@ -140,14 +160,15 @@ $(function() {
                     } else if (contentCard1 != "" && contentCard2 == "") {
                         let card = showTheCard(idCardHideClicked);
                         octupus.setCurrentContentCard2(card);
+                        
                         //couting the moviments 
                         octupus.setMovimenteCounter();
                         let showMovesElementToUpdate = document.getElementById('show_moves');
                         showMovesElementToUpdate.innerText = octupus.getMovimentCounter() + ' moves';
-
-
-                        console.log(octupus.getMovimentCounter());
                         
+                        //check number of star Rating
+                        checkStarRating();
+
                         //check if the cards have a match after 1s (the user need to  have time to see the two cards clicked)
                         setTimeout(checkCardsMatch, 1000);
                       
@@ -230,6 +251,15 @@ $(function() {
                 
             };
 
+            function checkStarRating() {
+                let moves = octupus.getMovimentCounter();
+                if(moves > 10 && moves <= 20) {
+                    starRatingElement.innerText = octupus.getStarRating(2);
+                } else if (moves > 20) {
+                    starRatingElement.innerText = octupus.getStarRating(1);
+                }
+            }
+
             function startTimer() {
                 /*
                 Author:	Idelbrandes Goncalves de Amorim
@@ -264,13 +294,6 @@ $(function() {
                 octupus.resetMovimenteCounter();
                 octupus.init();
             }
-
-
-            // let t0 =  performance.now();
-
-        //     let t1 =  performance.now();
-        //  console.log(t1 - t0);
-      
         },
         buildGame: (Grid, cards) => {
             //improved the performance of 0.312ms to 0.195ms using the fragment
