@@ -93,6 +93,8 @@ $(function() {
             //toDo: find the best algoritm to divide correct distribuition for the memory game
             const numRows = Math.round(numeberOfCards/4);
             const numCol = numRows;
+
+            let controlTheGame = octupus.getControlGame();
                 
             //get instance for the Grid
             let Grid = octupus.getGrid(numRows, numCol);
@@ -142,7 +144,6 @@ $(function() {
 
                 let idCardHideClicked = e.target.id;
                 let classCardHideClicked = e.target.classList.value;
-                let controlTheGame = octupus.getControlGame();
                 let contentCard1 = octupus.getCurrentContentCard1();
                 let contentCard2 = octupus.getCurrentContentCard2();
                 //check if only <td>/card is clicked and the card is hided
@@ -293,6 +294,7 @@ $(function() {
             function resetGame() {
                 gridElement.innerHTML = "";
                 octupus.resetMovimenteCounter();
+                controlTheGame.cardsShown = 0;
                 octupus.init();
             }
         },
