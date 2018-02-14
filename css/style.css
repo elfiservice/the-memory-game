@@ -1,12 +1,13 @@
 body {
     background-color: #ccc;
     text-align: center;
+    color: #033c63;
 }
 
 table {
     margin: 0 auto;
     width: 50%;
-    background-color: rgba(38, 102, 145, 0.87);
+    background-color: #11598a
 }
 
 table, tr, td {
@@ -16,19 +17,17 @@ table, tr, td {
 }
 
 td {
-    margin: 30px;
-
     cursor: pointer;
 }
 
 td.card {
-    background-color: orange;
-    padding: 32px 31px;
+    background-color: #f9bb49;
+    padding: 31px;
 }
 
 td.card_hided {
-    background-color: orangered;
-    padding: 35px 37px;
+    background-color: #f97b4c;
+    padding: 35px;
 }
 
 .hide {
