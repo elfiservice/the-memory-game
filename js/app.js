@@ -58,12 +58,12 @@ $(function() {
         setCurrentContentCard2: (cardContent) => {
             model.currentCardsSelected.card2 = cardContent;
         },
-        getControlGame: () => {
-            return model.controlTheGame;
+        getCardsShownCounter: () => {
+            return model.controlTheGame.cardsShown;
         },
-        setCardShownCounter : (numberCards) => {
+        setCardShownCounter : () => {
             let cardsStored = model.controlTheGame.cardsShown;
-            model.controlTheGame.cardsShown = cardsStored + numberCards;
+            model.controlTheGame.cardsShown = cardsStored + 2;
         },
         getMovimentCounter: () => {
             return model.controlTheGame.movimentCounter;
@@ -71,8 +71,9 @@ $(function() {
         setMovimenteCounter: () => {
             model.controlTheGame.movimentCounter++;
         },
-        resetMovimenteCounter: () => {
+        resetControls: () => {
             model.controlTheGame.movimentCounter = 0;
+            model.controlTheGame.cardsShown = 0;
         },
         getStarRating: (numberOfStars) => {
             return model.starRating(numberOfStars);
@@ -93,8 +94,6 @@ $(function() {
             //toDo: find the best algoritm to divide correct distribuition for the memory game
             const numRows = Math.round(numeberOfCards/4);
             const numCol = numRows;
-
-            let controlTheGame = octupus.getControlGame();
                 
             //get instance for the Grid
             let Grid = octupus.getGrid(numRows, numCol);
@@ -193,7 +192,7 @@ $(function() {
                     if (contentCard1.innerText == contentCard2.innerText) {
                         console.log("match!");
                         resetCards();
-                        controlTheGame.cardsShown = controlTheGame.cardsShown + 2;
+                        octupus.setCardShownCounter();
                         checkEndTheGame();
                         
                     } else {
@@ -221,7 +220,7 @@ $(function() {
                 }
 
                 function checkEndTheGame() {
-                    if(numeberOfCards == controlTheGame.cardsShown) {
+                    if(numeberOfCards == octupus.getCardsShownCounter()) {
                         let modalGameElement = document.querySelector(".modal_game");
                         let modalGameContentElement = document.querySelector(".modal_game_content");
                         let timerEndTheGameElement = document.getElementById('timer');
@@ -293,8 +292,7 @@ $(function() {
 
             function resetGame() {
                 gridElement.innerHTML = "";
-                octupus.resetMovimenteCounter();
-                controlTheGame.cardsShown = 0;
+                octupus.resetControls();
                 octupus.init();
             }
         },
