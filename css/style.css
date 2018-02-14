@@ -22,12 +22,12 @@ td {
 
 td.card {
     background-color: #f9bb49;
-    padding: 31px;
+    padding: 23px;
 }
 
 td.card_hided {
     background-color: #f97b4c;
-    padding: 35px;
+    padding: 27px 29px;
 }
 
 .hide {
