@@ -1,4 +1,4 @@
-$(function() {
+document.addEventListener('DOMContentLoaded', function () {
 
     let model = {
         Grid: function (row, col) {
@@ -190,7 +190,6 @@ $(function() {
                     let contentCard1 = octupus.getCurrentContentCard1();
                     let contentCard2 = octupus.getCurrentContentCard2();
                     if (contentCard1.innerText == contentCard2.innerText) {
-                        console.log("match!");
                         resetCards();
                         octupus.setCardShownCounter();
                         checkEndTheGame();
