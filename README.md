@@ -22,5 +22,4 @@ Still in development using
 
 The app is built with the following code dependencies:
 
-1. jQuery v3.2.1
-2. Fontawesome v5.0.6
+1. Fontawesome v5.0.6
