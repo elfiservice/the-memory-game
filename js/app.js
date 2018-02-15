@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
 
-    let model = {
+    const model = {
         Grid: function (row, col) {
             this.row = row,
             this.col = col
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     
-    let octupus = {
+    const octupus = {
         getGrid: (row, col) => {
             return new model.Grid(row, col);
         },
@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    let view = {
+    const view = {
         init: () => {
             //get a array with values for the level -> level 0 = 16 cards
             let cardsArray = octupus.getLevel(0);
