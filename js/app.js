@@ -180,7 +180,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     let idElementToShow = idCardHideClicked.split("-");
                     let cardToShow = document.getElementById(idElementToShow[0]);               
 
-                    cardToShow.offsetParent.offsetParent.classList.toggle("hover");
+                    cardToShow.offsetParent.parentElement.classList.toggle("hover");
 
                     return cardToShow;
                 }
@@ -197,10 +197,10 @@ document.addEventListener('DOMContentLoaded', function () {
                         let idCardToHide1 = contentCard1.id;
                         let idCardToHide2 = contentCard2.id;
                         let hideCard1 = document.getElementById(idCardToHide1);
-                        hideCard1.offsetParent.offsetParent.classList.toggle("hover");
+                        hideCard1.offsetParent.parentElement.classList.toggle("hover");
                         
                         let hideCard2 = document.getElementById(idCardToHide2);
-                        hideCard2.offsetParent.offsetParent.classList.toggle("hover");
+                        hideCard2.offsetParent.parentElement.classList.toggle("hover");
 
                         resetCards(); 
                     }
