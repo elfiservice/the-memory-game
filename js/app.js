@@ -141,6 +141,7 @@ document.addEventListener('DOMContentLoaded', function () {
             //listen a click on the card
             gridElement.onclick = function(e) {
 
+                
                 let idCardHideClicked = e.target.id;
                 let classCardHideClicked = e.target.classList.value;
                 let contentCard1 = octupus.getCurrentContentCard1();
@@ -178,11 +179,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 function showTheCard(idCardHideClicked) {
                     let idElementToShow = idCardHideClicked.split("-");
                     let cardToShow = document.getElementById(idElementToShow[0]);               
-                    cardToShow.classList.remove("hide");
 
-                    let cardHided = document.getElementById(idCardHideClicked);
-                    cardHided.classList.add("hide");
-                    
+                    cardToShow.offsetParent.offsetParent.classList.toggle("hover");
+
                     return cardToShow;
                 }
 
@@ -197,17 +196,11 @@ document.addEventListener('DOMContentLoaded', function () {
                     } else {
                         let idCardToHide1 = contentCard1.id;
                         let idCardToHide2 = contentCard2.id;
-                        let idCardToShow1 = idCardToHide1 + '-hide';
-                        let idCardToShow2 = idCardToHide2 + '-hide';
                         let hideCard1 = document.getElementById(idCardToHide1);
-                        hideCard1.classList.add("hide");
-                        let cardToShow1 = document.getElementById(idCardToShow1);               
-                        cardToShow1.classList.remove("hide");
-
+                        hideCard1.offsetParent.offsetParent.classList.toggle("hover");
+                        
                         let hideCard2 = document.getElementById(idCardToHide2);
-                        hideCard2.classList.add("hide");
-                        let cardToShow2 = document.getElementById(idCardToShow2);               
-                        cardToShow2.classList.remove("hide");
+                        hideCard2.offsetParent.offsetParent.classList.toggle("hover");
 
                         resetCards(); 
                     }
@@ -303,16 +296,27 @@ document.addEventListener('DOMContentLoaded', function () {
                 let createRow = document.createElement("tr");
                 for(let c = 1; c <= Grid.col; c++) {
                     let createdCard = document.createElement("td");
-                    createdCard.setAttribute("class", "hide card");
-                    createdCard.setAttribute("id", r+''+c);
-                    createdCard.innerText = cards[numberCardsCount];
-                    createRow.appendChild(createdCard);
+                    let flipContainerElement = document.createElement("div");
+                    flipContainerElement.setAttribute("class", "flip-container");
+                    let flipperElement = document.createElement("div");
+                    flipperElement.setAttribute("class", "flipper");
 
-                    let createdCardHide = document.createElement("td");
-                    createdCardHide.setAttribute("class", "card_hided");
-                    createdCardHide.setAttribute("id", r+''+c +'-hide');
-                    createdCardHide.innerText = "?";
-                    createRow.appendChild(createdCardHide);
+                    let cardFrontElement = document.createElement("div");
+                    cardFrontElement.setAttribute("class", "card_hided");
+                    cardFrontElement.setAttribute("id", r+''+c +'-hide');
+                    cardFrontElement.innerText = "?";
+                    flipperElement.appendChild(cardFrontElement);
+                    flipContainerElement.appendChild(flipperElement);
+
+                    let cardBackElement = document.createElement("div");
+                    cardBackElement.setAttribute("class", "card");
+                    cardBackElement.setAttribute("id", r+''+c);
+                    cardBackElement.innerText = cards[numberCardsCount];
+                    flipperElement.appendChild(cardBackElement);
+                    flipContainerElement.appendChild(flipperElement);
+
+                    createdCard.appendChild(flipContainerElement);
+                    createRow.appendChild(createdCard);
                     numberCardsCount++;
                 }
                 

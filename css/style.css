@@ -10,24 +10,24 @@ table {
     background-color: #11598a
 }
 
-table, tr, td {
+table,
+tr,
+td {
     border: 1px;
     border-style: hidden;
-    border-spacing: 20px;
+    border-spacing: 15px;
 }
 
 td {
     cursor: pointer;
 }
 
-td.card {
+.card {
     background-color: #f9bb49;
-    padding: 23px;
 }
 
-td.card_hided {
+.card_hided {
     background-color: #f97b4c;
-    padding: 27px 29px;
 }
 
 .hide {
@@ -35,13 +35,14 @@ td.card_hided {
 }
 
 /*MODAL END THE GAME*/
+
 .modal_game {
     position: fixed;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0, 0, 0, 0.5);
 }
 
 .modal_game_content {
@@ -59,6 +60,7 @@ td.card_hided {
 }
 
 /*CONTROL DE GAME*/
+
 #game_control {
     margin-bottom: 10px;
 }
@@ -70,4 +72,66 @@ td.card_hided {
 #restart_game_btn {
     padding: 10px;
     cursor: pointer;
+}
+
+/*ANIMATION FLIP CARDS*/
+
+.flip-container {
+    -webkit-perspective: 1000;
+    -moz-perspective: 1000;
+    -o-perspective: 1000;
+    perspective: 1000;
+}
+
+.flip-container.hover .flipper {
+    -webkit-transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg);
+    -o-transform: rotateY(180deg);
+    transform: rotateY(180deg);
+}
+
+.flip-container,
+.card,
+.card_hided {
+    width: 100%;
+    padding: 25px 0;
+    height: 20px;
+}
+
+.flipper {
+    -webkit-transition: 0.5s;
+    -webkit-transform-style: preserve-3d;
+    -moz-transition: 0.5s;
+    -moz-transform-style: preserve-3d;
+    -o-transition: 0.5s;
+    -o-transform-style: preserve-3d;
+    transition: 0.5s;
+    transform-style: preserve-3d;
+    position: relative;
+}
+
+.card_hided, .card {
+	-webkit-backface-visibility: hidden;
+	-moz-backface-visibility: hidden;
+  -o-backface-visibility: hidden;
+	backface-visibility: hidden;
+
+	position: absolute;
+	top: -25px;
+	left: 0;
+}
+
+.card {
+    -webkit-transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg);
+    -o-transform: rotateY(180deg);
+    transform: rotateY(180deg);
+}
+
+
+/* Ajust the width the grid */
+@media (max-width: 600px) {
+    table {
+        width: 95%;
+    }
 }
