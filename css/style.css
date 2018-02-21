@@ -105,6 +105,7 @@ td {
     width: 100%;
     padding: 25px 0;
     height: 20px;
+    border-radius: 5px;
 }
 
 .flipper {
