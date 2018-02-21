@@ -7,7 +7,9 @@ body {
 table {
     margin: 0 auto;
     width: 50%;
-    background-color: #11598a
+    background-color: #11598a;
+    background-image: url("../images/french-stucco.png");
+    /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
 }
 
 table,
@@ -28,7 +30,10 @@ td {
 
 .card_hided {
     background-color: #f97b4c;
+    background-image: url("../images/green-gobbler.png");
+    /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
 }
+
 
 .hide {
     display: none;

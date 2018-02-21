@@ -304,7 +304,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     let cardFrontElement = document.createElement("div");
                     cardFrontElement.setAttribute("class", "card_hided");
                     cardFrontElement.setAttribute("id", r+''+c +'-hide');
-                    cardFrontElement.innerText = "?";
+                    cardFrontElement.innerText = "";
                     flipperElement.appendChild(cardFrontElement);
                     flipContainerElement.appendChild(flipperElement);
 
