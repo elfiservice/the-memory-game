@@ -180,6 +180,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     let idElementToShow = idCardHideClicked.split("-");
                     let cardToShow = document.getElementById(idElementToShow[0]);               
 
+                    playSound('sounds/card-clicked.wav');
                     cardToShow.offsetParent.parentElement.classList.toggle("hover");
 
                     return cardToShow;
@@ -240,6 +241,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
                         
                     }
+                }
+
+                function playSound(path) {
+                    var audioElement = document.createElement('audio');
+                    audioElement.setAttribute('src', path);
+                    audioElement.play();
                 }
                 
             };
