@@ -10,6 +10,8 @@ table {
     background-color: #11598a;
     background-image: url("../images/french-stucco.png");
     /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 2px;
 }
 
 table,
@@ -32,6 +34,11 @@ td {
     background-color: #f97b4c;
     background-image: url("../images/green-gobbler.png");
     /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
+}
+
+.card,
+.card_hided {
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.19);
 }
 
 
