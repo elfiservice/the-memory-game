@@ -225,7 +225,8 @@ document.addEventListener('DOMContentLoaded', function () {
                         let contentEndTheGame = '<h2>Well Done!!</h2>' +
                                                 '<p>You finished with just ' + octupus.getMovimentCounter() + ' moviments!' +
                                                 '<p>With the time of ' + timerEndTheGameElement.innerText + '</p>' +
-                                                '<p>'+ starRatingElement.innerText +'</p>';
+                                                '<p>'+ starRatingElement.innerText +'</p>' +
+                                                '<p><img width="30%" src="images/bananaman.gif" alt="A animeted gift with a Dacing banana" ></p>';
                         modalGameContentElement.innerHTML = contentEndTheGame;
 
                         let resetBtnEndGameElement = document.createElement('span');
