@@ -190,6 +190,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     let contentCard1 = octupus.getCurrentContentCard1();
                     let contentCard2 = octupus.getCurrentContentCard2();
                     if (contentCard1.innerText == contentCard2.innerText) {
+                        playSound('sounds/cards-match.mp3');
                         resetCards();
                         octupus.setCardShownCounter();
                         checkEndTheGame();
@@ -197,6 +198,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     } else {
                         let idCardToHide1 = contentCard1.id;
                         let idCardToHide2 = contentCard2.id;
+
+                        playSound('sounds/cards-not-match.wav');
+
                         let hideCard1 = document.getElementById(idCardToHide1);
                         hideCard1.offsetParent.parentElement.classList.toggle("hover");
                         
@@ -242,12 +246,6 @@ document.addEventListener('DOMContentLoaded', function () {
                         
                     }
                 }
-
-                function playSound(path) {
-                    var audioElement = document.createElement('audio');
-                    audioElement.setAttribute('src', path);
-                    audioElement.play();
-                }
                 
             };
 
@@ -268,6 +266,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 */
                 sSecs++;
                 if(sSecs == 60){
+                    playSound('sounds/time-past-one-minute.wav');
                     sSecs = 0;
                     sMins++;
                     if(sMins <= 9) {
@@ -293,6 +292,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 gridElement.innerHTML = "";
                 octupus.resetControls();
                 octupus.init();
+            }
+
+            function playSound(path) {
+                var audioElement = document.createElement('audio');
+                audioElement.setAttribute('src', path);
+                audioElement.play();
             }
         },
         buildGame: (Grid, cards) => {
