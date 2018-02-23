@@ -200,12 +200,23 @@ document.addEventListener('DOMContentLoaded', function () {
                         let idCardToHide2 = contentCard2.id;
 
                         playSound('sounds/cards-not-match.wav');
+                        
 
                         let hideCard1 = document.getElementById(idCardToHide1);
-                        hideCard1.offsetParent.parentElement.classList.toggle("hover");
+                        hideCard1.offsetParent.parentElement.classList.add("shake");
                         
+                        
+
                         let hideCard2 = document.getElementById(idCardToHide2);
-                        hideCard2.offsetParent.parentElement.classList.toggle("hover");
+                        hideCard2.offsetParent.parentElement.classList.add("shake");
+                        
+
+                        setTimeout(() => {
+                            hideCard1.offsetParent.parentElement.classList.toggle("hover");
+                            hideCard2.offsetParent.parentElement.classList.toggle("hover");
+                            hideCard1.offsetParent.parentElement.classList.remove("shake");
+                            hideCard2.offsetParent.parentElement.classList.remove("shake");
+                        }, 1000);
 
                         resetCards(); 
                     }
