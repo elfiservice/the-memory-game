@@ -303,6 +303,7 @@ document.addEventListener('DOMContentLoaded', function () {
             function resetGame() {
                 gridElement.innerHTML = "";
                 octupus.resetControls();
+                clearTimeout(timeOut);
                 octupus.init();
             }
 
