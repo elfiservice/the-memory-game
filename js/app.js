@@ -19,10 +19,12 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         controlTheGame: {
             'cardsShown' : 0,
-            'movimentCounter' : 0
+            'movimentCounter' : 0,
+            'currentStarRating' : 3
         },
         starRating: function(number) {
             switch(number) {
+                case 0: return "☆☆☆"; break;
                 case 1: return "★☆☆"; break;
                 case 2: return "★★☆"; break;
                 case 3: return "★★★"; break;
@@ -75,8 +77,13 @@ document.addEventListener('DOMContentLoaded', function () {
         resetControls: () => {
             model.controlTheGame.movimentCounter = 0;
             model.controlTheGame.cardsShown = 0;
+            model.controlTheGame.currentStarRating = 3;
         },
-        getStarRating: (numberOfStars) => {
+        setStarRating: (numOfStarsRating) => {
+            model.controlTheGame.currentStarRating = numOfStarsRating;
+        },
+        getStarRating: () => {
+            const numberOfStars = model.controlTheGame.currentStarRating;
             return model.starRating(numberOfStars);
         },
         
@@ -177,6 +184,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         
                         //check number of star Rating
                         checkStarRating();
+                        starRatingElement.innerText = octupus.getStarRating();
 
                         //check if the cards have a match after 1s (the user need to  have time to see the two cards clicked)
                         setTimeout(checkCardsMatch, 1000);
@@ -272,9 +280,11 @@ document.addEventListener('DOMContentLoaded', function () {
             function checkStarRating() {
                 let moves = octupus.getMovimentCounter();
                 if(moves > 12 && moves <= 20) {
-                    starRatingElement.innerText = octupus.getStarRating(2);
-                } else if (moves > 20) {
-                    starRatingElement.innerText = octupus.getStarRating(1);
+                    octupus.setStarRating(2);
+                } else if (moves > 20 && moves <= 30) {
+                    octupus.setStarRating(1);
+                } else if (moves > 30) {
+                    octupus.setStarRating(0);
                 }
             }
 
