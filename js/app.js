@@ -20,7 +20,8 @@ document.addEventListener('DOMContentLoaded', function () {
         controlTheGame: {
             'cardsShown' : 0,
             'movimentCounter' : 0,
-            'currentStarRating' : 3
+            'currentStarRating' : 3,
+            'currentLevel' : 0
         },
         starRating: function(number) {
             switch(number) {
@@ -41,10 +42,17 @@ document.addEventListener('DOMContentLoaded', function () {
         getGrid: (row, col) => {
             return new model.Grid(row, col);
         },
-        getLevel: (level) => {
+        getLevel: () => {
+            return model.controlTheGame.currentLevel;
+        },
+        getLevelCards: () => {
+            const level = model.controlTheGame.currentLevel;
             let cardsArray = model.level(level);
             //Sorting an Array in Random Order
             return cardsArray.sort(function(a, b){return 0.5 - Math.random()});            
+        },
+        setLevel: (level) => {
+            model.controlTheGame.currentLevel = level;
         },
         getCurrentsCards: () => {
             return model.currentCardsSelected;
@@ -78,6 +86,7 @@ document.addEventListener('DOMContentLoaded', function () {
             model.controlTheGame.movimentCounter = 0;
             model.controlTheGame.cardsShown = 0;
             model.controlTheGame.currentStarRating = 3;
+            model.controlTheGame.currentLevel = 0;
         },
         setStarRating: (numOfStarsRating) => {
             model.controlTheGame.currentStarRating = numOfStarsRating;
@@ -97,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const view = {
         init: () => {
             //get a array with values for the level -> level 0 = 16 cards
-            let cardsArray = octupus.getLevel(1);
+            let cardsArray = octupus.getLevelCards();
             let  numeberOfCards = cardsArray.length;
             //toDo: find the best algoritm to divide correct distribuition for the memory game
             let divisionRowCol = Math.sqrt(numeberOfCards);
