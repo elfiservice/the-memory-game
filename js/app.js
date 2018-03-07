@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
         level: function (levelNumber) {
             switch(levelNumber) {
                 case 0: return ['☯','♫','☯','♫','♞','♞','☂','☂','☀','☀','❤','❤','😀','😀','😜','😜']; break;
+                case 1: return ['☯','♫','☯','♫','♞','♞','☂','☂','☀','☀','❤','❤','😀','😀','😜','😜','👻','👻','👀','👀']; break;
                 default: console.log('Error Level not passed');
                 
             }
@@ -89,11 +90,18 @@ document.addEventListener('DOMContentLoaded', function () {
     const view = {
         init: () => {
             //get a array with values for the level -> level 0 = 16 cards
-            let cardsArray = octupus.getLevel(0);
+            let cardsArray = octupus.getLevel(1);
             let  numeberOfCards = cardsArray.length;
             //toDo: find the best algoritm to divide correct distribuition for the memory game
-            const numRows = Math.round(numeberOfCards/4);
-            const numCol = numRows;
+            let divisionRowCol = Math.sqrt(numeberOfCards);
+            divisionRowCol = Math.trunc(divisionRowCol);
+            console.log(Math.trunc(divisionRowCol));
+            
+            const numRows = Math.round(numeberOfCards/divisionRowCol);
+            //const numCol = numRows;
+            const numCol = divisionRowCol;
+            console.log(numRows);
+            console.log(numCol);
                 
             //get instance for the Grid
             let Grid = octupus.getGrid(numRows, numCol);
@@ -263,7 +271,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             function checkStarRating() {
                 let moves = octupus.getMovimentCounter();
-                if(moves > 10 && moves <= 20) {
+                if(moves > 12 && moves <= 20) {
                     starRatingElement.innerText = octupus.getStarRating(2);
                 } else if (moves > 20) {
                     starRatingElement.innerText = octupus.getStarRating(1);
