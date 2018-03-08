@@ -82,11 +82,11 @@ document.addEventListener('DOMContentLoaded', function () {
         setMovimenteCounter: () => {
             model.controlTheGame.movimentCounter++;
         },
-        resetControls: () => {
+        resetControls: (levelToSet) => {
             model.controlTheGame.movimentCounter = 0;
             model.controlTheGame.cardsShown = 0;
             model.controlTheGame.currentStarRating = 3;
-            model.controlTheGame.currentLevel = 0;
+            model.controlTheGame.currentLevel = levelToSet;
         },
         setStarRating: (numOfStarsRating) => {
             model.controlTheGame.currentStarRating = numOfStarsRating;
@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', function () {
             gameControlElement.innerHTML = restartGameBtnElement;
             let restardGameBtn = document.getElementById('restart_game_btn');
             restardGameBtn.onclick = function() {
-                resetGame();
+                resetGame(0);
             }
 
             //show moviments
@@ -265,6 +265,22 @@ document.addEventListener('DOMContentLoaded', function () {
                                                 '<p><img width="30%" src="images/bananaman.gif" alt="A animeted gift with a Dacing banana" ></p>';
                         modalGameContentElement.innerHTML = contentEndTheGame;
 
+                        let nextLevelElement = document.createElement('div');
+                        nextLevelElement.setAttribute('id','next_level_btn');
+                        let nextLevelText =  '';
+                        if(octupus.getLevel() == 0) {
+                            nextLevelText = 'Go to Next Level!';
+                        } else {
+                            nextLevelText = 'You Finished the Game!!'
+                        }
+                        nextLevelElement.innerText = nextLevelText;
+                        modalGameContentElement.appendChild(nextLevelElement);
+                        let nextLevelBtn = document.getElementById('next_level_btn');
+                        nextLevelBtn.onclick = function() {
+                            modalGameElement.classList.add("hide");
+                            setNextLevel();
+                        };
+
                         let resetBtnEndGameElement = document.createElement('span');
                         resetBtnEndGameElement.setAttribute('id', 'reset_btn_end_game');
                         resetBtnEndGameElement.innerHTML = '<i class="fas fa-redo-alt"></i>';
@@ -272,7 +288,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         let resetBtnEndGame = document.getElementById('reset_btn_end_game');
                         resetBtnEndGame.onclick = function() {
                             modalGameElement.classList.add("hide");
-                            resetGame();
+                            resetGame(0);
                         }
 
                         clearTimeout(timeOut);
@@ -327,9 +343,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 timeOut =  setTimeout(startTimer,1000);            
             }
 
-            function resetGame() {
+            function resetGame(levelToSet) {
                 gridElement.innerHTML = "";
-                octupus.resetControls();
+                octupus.resetControls(levelToSet);
                 clearTimeout(timeOut);
                 octupus.init();
             }
@@ -338,6 +354,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 var audioElement = document.createElement('audio');
                 audioElement.setAttribute('src', path);
                 audioElement.play();
+            }
+
+            function setNextLevel() {
+                const currentlyLevel = octupus.getLevel();
+                if(currentlyLevel == 0) {
+                    resetGame(1);
+                } else {
+                    resetGame(0);
+                }
             }
         },
         buildGame: (Grid, cards) => {
