@@ -7,8 +7,9 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         level: function (levelNumber) {
             switch(levelNumber) {
-                case 0: return ['☯','♫','☯','♫','♞','♞','☂','☂','☀','☀','❤','❤','😀','😀','😜','😜']; break;
-                case 1: return ['☯','♫','☯','♫','♞','♞','☂','☂','☀','☀','❤','❤','😀','😀','😜','😜','👻','👻','👀','👀']; break;
+                case 0: return ['☯','♫','☯','♫','♞','♞','☂','☂','☀','☀','❤','❤']; break;
+                case 1: return ['☯','♫','☯','♫','♞','♞','☂','☂','☀','☀','❤','❤','😀','😀','😜','😜']; break;
+                case 2: return ['☯','♫','☯','♫','♞','♞','☂','☂','☀','☀','❤','❤','😀','😀','😜','😜','👻','👻','👀','👀']; break;
                 default: console.log('Error Level not passed');
                 
             }
@@ -268,8 +269,10 @@ document.addEventListener('DOMContentLoaded', function () {
                         let nextLevelElement = document.createElement('div');
                         nextLevelElement.setAttribute('id','next_level_btn');
                         let nextLevelText =  '';
-                        if(octupus.getLevel() == 0) {
-                            nextLevelText = 'Go to Next Level!';
+
+                        const level = octupus.getLevel();
+                        if(level >= 0 && level < 2) {
+                            nextLevelText = `Go to Level ${level + 2}`;
                         } else {
                             nextLevelText = 'You Finished the Game!!'
                         }
@@ -360,6 +363,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 const currentlyLevel = octupus.getLevel();
                 if(currentlyLevel == 0) {
                     resetGame(1);
+                } else if(currentlyLevel == 1) {
+                    resetGame(2);
                 } else {
                     resetGame(0);
                 }
