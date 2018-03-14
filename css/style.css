@@ -7,7 +7,6 @@ body {
 
 table {
     margin: 0 auto;
-    width: 50%;
     background-color: #11598a;
     background-image: url("../images/french-stucco.png");
     /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
@@ -172,9 +171,56 @@ td {
     }
   }
 
+/* Jump Animation */
+@keyframes jump {
+    0%{
+        transform: translateY(0);
+      }
+      20%{
+        transform: translateY(0);
+      }
+      40%{
+        transform: translateY(-30px);
+      }
+      50%{
+        transform: translateY(0);
+      }
+      60%{
+        transform: translateY(-15px);
+      }
+      80%{
+        transform: translateY(0);
+      }
+      100%{
+        transform: translateY(0);
+      }
+  }
+
+.jump {
+ 
+    animation: jump 1s ease-in 0s 1 normal ;
+}
+
+#next_level_btn {
+    padding: 10px;
+    border: 1px solid;
+    width: 20%;
+    margin: 0 auto;
+    cursor: pointer;
+}
+
+#reset_btn_end_game {
+    padding: 10px;
+    cursor: pointer;
+    width: 20%;
+    margin: 20px auto;
+    margin-bottom: 0;
+}
+
 /* Ajust the width the grid */
 @media (max-width: 600px) {
     table {
         width: 95%;
     }
 }
+

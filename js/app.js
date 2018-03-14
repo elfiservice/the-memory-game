@@ -106,23 +106,25 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const view = {
         init: () => {
+            let gridElement = document.getElementById('game_grid');
+            
             //get a array with values for the level -> level 0 = 16 cards
             let cardsArray = octupus.getLevelCards();
             let  numeberOfCards = cardsArray.length;
             //toDo: find the best algoritm to divide correct distribuition for the memory game
             let divisionRowCol = Math.sqrt(numeberOfCards);
             divisionRowCol = Math.trunc(divisionRowCol);
-            console.log(Math.trunc(divisionRowCol));
             
             const numRows = Math.round(numeberOfCards/divisionRowCol);
             //const numCol = numRows;
             const numCol = divisionRowCol;
-            console.log(numRows);
-            console.log(numCol);
+
+
                 
             //get instance for the Grid
             let Grid = octupus.getGrid(numRows, numCol);
-            let gridElement = document.getElementById('game_grid');
+            
+            gridElement.style = 'width: 28%;';
 
             //built the game structure
             let fragmentBuilded = view.buildGame(Grid, cardsArray);
@@ -215,25 +217,28 @@ document.addEventListener('DOMContentLoaded', function () {
                 function checkCardsMatch() {
                     let contentCard1 = octupus.getCurrentContentCard1();
                     let contentCard2 = octupus.getCurrentContentCard2();
+                    let idCardToHide1 = contentCard1.id;
+                    let idCardToHide2 = contentCard2.id;
+
+                    let hideCard1 = document.getElementById(idCardToHide1);
+                    let hideCard2 = document.getElementById(idCardToHide2);
+
                     if (contentCard1.innerText == contentCard2.innerText) {
                         playSound('sounds/cards-match.mp3');
+                        hideCard1.offsetParent.parentElement.classList.add("jump");
+                        hideCard2.offsetParent.parentElement.classList.add("jump");
                         resetCards();
                         octupus.setCardShownCounter();
                         checkEndTheGame();
                         
                     } else {
-                        let idCardToHide1 = contentCard1.id;
-                        let idCardToHide2 = contentCard2.id;
+
 
                         playSound('sounds/cards-not-match.wav');
                         
 
-                        let hideCard1 = document.getElementById(idCardToHide1);
-                        hideCard1.offsetParent.parentElement.classList.add("shake");
-                        
-                        
 
-                        let hideCard2 = document.getElementById(idCardToHide2);
+                        hideCard1.offsetParent.parentElement.classList.add("shake");
                         hideCard2.offsetParent.parentElement.classList.add("shake");
                         
 
@@ -263,7 +268,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                                 '<p>You finished with just ' + octupus.getMovimentCounter() + ' moviments!' +
                                                 '<p>With the time of ' + timerEndTheGameElement.innerText + '</p>' +
                                                 '<p>'+ starRatingElement.innerText +'</p>' +
-                                                '<p><img width="30%" src="images/bananaman.gif" alt="A animeted gift with a Dacing banana" ></p>';
+                                                '<p><img width="10%" src="images/bananaman.gif" alt="A animeted gift with a Dacing banana" ></p>';
                         modalGameContentElement.innerHTML = contentEndTheGame;
 
                         let nextLevelElement = document.createElement('div');
@@ -284,7 +289,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             setNextLevel();
                         };
 
-                        let resetBtnEndGameElement = document.createElement('span');
+                        let resetBtnEndGameElement = document.createElement('div');
                         resetBtnEndGameElement.setAttribute('id', 'reset_btn_end_game');
                         resetBtnEndGameElement.innerHTML = '<i class="fas fa-redo-alt"></i>';
                         modalGameContentElement.appendChild(resetBtnEndGameElement);
