@@ -123,8 +123,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 
             //get instance for the Grid
             let Grid = octupus.getGrid(numRows, numCol);
-            
-            gridElement.style = 'width: 28%;';
+        
 
             //built the game structure
             let fragmentBuilded = view.buildGame(Grid, cardsArray);
