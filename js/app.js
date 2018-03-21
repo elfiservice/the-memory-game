@@ -231,15 +231,10 @@ document.addEventListener('DOMContentLoaded', function () {
                         checkEndTheGame();
                         
                     } else {
-
-
                         playSound('sounds/cards-not-match.wav');
                         
-
-
                         hideCard1.offsetParent.parentElement.classList.add("shake");
                         hideCard2.offsetParent.parentElement.classList.add("shake");
-                        
 
                         setTimeout(() => {
                             hideCard1.offsetParent.parentElement.classList.toggle("hover");

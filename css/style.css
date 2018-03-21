@@ -5,6 +5,11 @@ body {
     color: #033c63;
 }
 
+.grid_container {
+    width: 40%;
+    margin: 0 auto;
+}
+
 table {
     margin: 0 auto;
     background-color: #11598a;
@@ -12,7 +17,7 @@ table {
     /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-radius: 2px;
-    width: 45%;
+    width: 100%;
 }
 
 table,
@@ -114,6 +119,8 @@ td {
     padding: 25px 0;
     height: 20px;
     border-radius: 5px;
+    margin: 0 auto;
+    max-width: 90px;
 }
 
 .flipper {
@@ -219,8 +226,8 @@ td {
 }
 
 /* Ajust the width the grid */
-@media (max-width: 600px) {
-    table {
+@media (max-width: 660px) {
+    .grid_container {
         width: 95%;
     }
 }
