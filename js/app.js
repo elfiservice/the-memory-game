@@ -107,10 +107,39 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const view = {
         init: () => {
-            let gridElement = document.getElementById('game_grid');
-            let modalGameElement = document.querySelector(".modal_game");
-            let modalGameContentElement = document.querySelector(".modal_game_content");
+            const [modalGameElement, modalGameContentElement] = view.getModalStructure();
+
+                        //Name of the player
+                        // let nameOfPlayerElement = document.createElement('span');
+                        // nameOfPlayerElement.setAttribute('id','name_player');
+                        // nameOfPlayerElement.innerText = 'My Name';
+                        // gameControlElement.appendChild(nameOfPlayerElement);
+
+            let contentAddNamePlayer = '<h2>Lets Start the Game!</h2>' +
+            '<p><label>Your Nickname: </label> <input id="name_of_player" value="" type="text" required>' +
+                '<button class="save_name_player_btn" > Go! </button></p>';
+            modalGameContentElement.innerHTML = contentAddNamePlayer;
+            modalGameElement.classList.remove("hide");
+
+            let saveNamePlayerBtn = document.querySelector(".save_name_player_btn");
+            saveNamePlayerBtn.onclick = function() {
+                const nameOfPlayer = document.getElementById('name_of_player');
+                console.log(nameOfPlayer.value);
+                
+                modalGameElement.classList.add("hide");
+                view.startTheGame();
+            }
             
+        },
+        getModalStructure: () => {
+            const modalGameElement = document.querySelector(".modal_game");
+            const modalGameContentElement = document.querySelector(".modal_game_content");
+
+            return [modalGameElement, modalGameContentElement];
+        },
+        startTheGame: () => {
+            let gridElement = document.getElementById('game_grid');
+            const [modalGameElement, modalGameContentElement] = view.getModalStructure();
             //get a array with values for the level -> level 0 = 16 cards
             let cardsArray = octupus.getLevelCards();
             let  numeberOfCards = cardsArray.length;
@@ -166,25 +195,9 @@ document.addEventListener('DOMContentLoaded', function () {
             gameControlElement.appendChild(starRatingElementCreated);
             let starRatingElement = document.getElementById('star_rating');
 
-            //Name of the player
-            let nameOfPlayerElement = document.createElement('span');
-            nameOfPlayerElement.setAttribute('id','name_player');
-            nameOfPlayerElement.innerText = 'My Name';
-            gameControlElement.appendChild(nameOfPlayerElement);
 
-            let nameOfPlayerBtn = document.getElementById('name_player');
-            nameOfPlayerBtn.onclick = function(e) {
-                let contentAddNamePlayer = '<h2>Leave your Name to the Ranking</h2>' +
-                '<p><label>Your Nickname: </label> <input type="text" >' +
-                 '<button class="save_name_player_btn" > Save </button></p>';
-                modalGameContentElement.innerHTML = contentAddNamePlayer;
-                modalGameElement.classList.remove("hide");
 
-                let saveNamePlayerBtn = document.querySelector(".save_name_player_btn");
-                saveNamePlayerBtn.onclick = function() {
-                    modalGameElement.classList.add("hide");
-                }
-            }
+
 
             //listen a click on the card
             gridElement.onclick = function(e) {
@@ -197,7 +210,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 //check if only <td>/card is clicked and the card is hided
                 if(idCardHideClicked != "game_grid" && classCardHideClicked == "card_hided") {
 
-                   if(contentCard1 == "" && contentCard2 == "") {
+                    if(contentCard1 == "" && contentCard2 == "") {
                         let card = showTheCard(idCardHideClicked);
                         octupus.setCurrentContentCard1(card);
 
@@ -221,7 +234,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                         //check if the cards have a match after 1s (the user need to  have time to see the two cards clicked)
                         setTimeout(checkCardsMatch, 1000);
-                      
+                        
                     }
                 }
 
