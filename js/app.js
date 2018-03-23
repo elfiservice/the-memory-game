@@ -23,7 +23,8 @@ document.addEventListener('DOMContentLoaded', function () {
             'movimentCounter' : 0,
             'currentStarRating' : 3,
             'currentLevel' : 0,
-            'scores' : 0
+            'scores' : 0,
+            'currentPlayerID' : 0
         },
         starRating: function(number) {
             switch(number) {
@@ -97,6 +98,15 @@ document.addEventListener('DOMContentLoaded', function () {
             const numberOfStars = model.controlTheGame.currentStarRating;
             return model.starRating(numberOfStars);
         },
+        setNameOfPlayer: (name) => {
+            var uniqueId = (new Date).getTime(); 
+            model.controlTheGame.currentPlayerID = uniqueId;
+            
+            localStorage.setItem("player-" + uniqueId, name);
+        },
+        getNameOfPlayer: () => {
+            return localStorage.getItem("player-" + model.controlTheGame.currentPlayerID);
+        },
         
 
         init: () => {
@@ -108,24 +118,44 @@ document.addEventListener('DOMContentLoaded', function () {
     const view = {
         init: () => {
             const [modalGameElement, modalGameContentElement] = view.getModalStructure();
-
-                        //Name of the player
-                        // let nameOfPlayerElement = document.createElement('span');
-                        // nameOfPlayerElement.setAttribute('id','name_player');
-                        // nameOfPlayerElement.innerText = 'My Name';
-                        // gameControlElement.appendChild(nameOfPlayerElement);
-
+            
+            //input form ot get name of the player before start the game
             let contentAddNamePlayer = '<h2>Lets Start the Game!</h2>' +
             '<p><label>Your Nickname: </label> <input id="name_of_player" value="" type="text" required>' +
                 '<button class="save_name_player_btn" > Go! </button></p>';
             modalGameContentElement.innerHTML = contentAddNamePlayer;
+
+            //List of Players - Ranking
+            let playerListElement = document.createElement('ul');
+            let playerList = "";
+            for (var i = 0; i < localStorage.length; i++){
+                let stringKey = localStorage.key(i);
+                if(stringKey.indexOf('player-') > -1) {
+                    let player = localStorage.getItem(localStorage.key(i));
+                    playerList += `<li> ${player} </li>`;
+                }
+            }
+            playerListElement.innerHTML = playerList;
+            modalGameContentElement.appendChild(playerListElement);
+            
+            //show the model on the screen
             modalGameElement.classList.remove("hide");
 
+            //handler when save name player btn is clicked 
             let saveNamePlayerBtn = document.querySelector(".save_name_player_btn");
             saveNamePlayerBtn.onclick = function() {
                 const nameOfPlayer = document.getElementById('name_of_player');
-                console.log(nameOfPlayer.value);
+                let playerName; 
+                if(!nameOfPlayer.value) {
+                    playerName = 'quest';
+                } else {
+                    playerName = nameOfPlayer.value;
+                }
                 
+                //save the name of player in the local storage
+                octupus.setNameOfPlayer(playerName);
+                
+                //close modal
                 modalGameElement.classList.add("hide");
                 view.startTheGame();
             }
@@ -161,6 +191,11 @@ document.addEventListener('DOMContentLoaded', function () {
             let fragmentBuilded = view.buildGame(Grid, cardsArray);
             gridElement.appendChild(fragmentBuilded);
 
+            //Name of the player
+            let nameOfPlayerEle
+            let nameOfPlayerElement = document.getElementById('player_name');
+            nameOfPlayerElement.innerHTML = `<h3>${octupus.getNameOfPlayer()}</h3>`;
+
             //add controls to the game 
             let gameControlElement = document.getElementById("game_control");
 
@@ -194,9 +229,6 @@ document.addEventListener('DOMContentLoaded', function () {
             starRatingElementCreated.innerText = octupus.getStarRating(3);
             gameControlElement.appendChild(starRatingElementCreated);
             let starRatingElement = document.getElementById('star_rating');
-
-
-
 
 
             //listen a click on the card
@@ -380,10 +412,19 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             function resetGame(levelToSet) {
+                reset(levelToSet);
+                octupus.init();
+            }
+
+            function reset(levelToSet) {
                 gridElement.innerHTML = "";
                 octupus.resetControls(levelToSet);
                 clearTimeout(timeOut);
-                octupus.init();
+            }
+
+            function startNextLevel(levelToSet) {
+                reset(levelToSet);
+                view.startTheGame();
             }
 
             function playSound(path) {
@@ -395,11 +436,11 @@ document.addEventListener('DOMContentLoaded', function () {
             function setNextLevel() {
                 const currentlyLevel = octupus.getLevel();
                 if(currentlyLevel == 0) {
-                    resetGame(1);
+                    startNextLevel(1);
                 } else if(currentlyLevel == 1) {
-                    resetGame(2);
+                    startNextLevel(2);
                 } else {
-                    resetGame(0);
+                    startNextLevel(0);
                 }
             }
         },
