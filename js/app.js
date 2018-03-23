@@ -22,7 +22,8 @@ document.addEventListener('DOMContentLoaded', function () {
             'cardsShown' : 0,
             'movimentCounter' : 0,
             'currentStarRating' : 3,
-            'currentLevel' : 0
+            'currentLevel' : 0,
+            'scores' : 0
         },
         starRating: function(number) {
             switch(number) {
@@ -107,6 +108,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const view = {
         init: () => {
             let gridElement = document.getElementById('game_grid');
+            let modalGameElement = document.querySelector(".modal_game");
+            let modalGameContentElement = document.querySelector(".modal_game_content");
             
             //get a array with values for the level -> level 0 = 16 cards
             let cardsArray = octupus.getLevelCards();
@@ -163,6 +166,25 @@ document.addEventListener('DOMContentLoaded', function () {
             gameControlElement.appendChild(starRatingElementCreated);
             let starRatingElement = document.getElementById('star_rating');
 
+            //Name of the player
+            let nameOfPlayerElement = document.createElement('span');
+            nameOfPlayerElement.setAttribute('id','name_player');
+            nameOfPlayerElement.innerText = 'My Name';
+            gameControlElement.appendChild(nameOfPlayerElement);
+
+            let nameOfPlayerBtn = document.getElementById('name_player');
+            nameOfPlayerBtn.onclick = function(e) {
+                let contentAddNamePlayer = '<h2>Leave your Name to the Ranking</h2>' +
+                '<p><label>Your Nickname: </label> <input type="text" >' +
+                 '<button class="save_name_player_btn" > Save </button></p>';
+                modalGameContentElement.innerHTML = contentAddNamePlayer;
+                modalGameElement.classList.remove("hide");
+
+                let saveNamePlayerBtn = document.querySelector(".save_name_player_btn");
+                saveNamePlayerBtn.onclick = function() {
+                    modalGameElement.classList.add("hide");
+                }
+            }
 
             //listen a click on the card
             gridElement.onclick = function(e) {
@@ -254,8 +276,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 function checkEndTheGame() {
                     if(numeberOfCards == octupus.getCardsShownCounter()) {
-                        let modalGameElement = document.querySelector(".modal_game");
-                        let modalGameContentElement = document.querySelector(".modal_game_content");
+
                         let timerEndTheGameElement = document.getElementById('timer');
 
                         let contentEndTheGame = '<h2>Well Done!!</h2>' +
