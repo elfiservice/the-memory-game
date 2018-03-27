@@ -101,22 +101,30 @@ document.addEventListener('DOMContentLoaded', function () {
         setNameOfPlayer: (name) => {
             var uniqueId = (new Date).getTime(); 
             model.controlTheGame.currentPlayerID = uniqueId;
-            
-            localStorage.setItem("player-" + uniqueId, name);
+            let playerData = [];
+            playerData[0] = name;
+            playerData[1] = '0';
+            localStorage.setItem("player-" + uniqueId, JSON.stringify(playerData));
         },
         getNameOfPlayer: () => {
-            return localStorage.getItem("player-" + model.controlTheGame.currentPlayerID);
+            return JSON.parse(localStorage.getItem("player-" + model.controlTheGame.currentPlayerID));
+            
         },
         getRanking: () => {
             let playerList = "";
             for (var i = 0; i < localStorage.length; i++){
                 let stringKey = localStorage.key(i);
                 if(stringKey.indexOf('player-') > -1) {
-                    let player = localStorage.getItem(localStorage.key(i));
-                    playerList += `<li> ${player} </li>`;
+                    let [player, score] = JSON.parse(localStorage.getItem(localStorage.key(i)));   
+                    playerList += `<li> ${player} - ${score}</li>`;
                 }
             }
             return playerList;
+        },
+        setScore: (number) => {
+            let currentScore = model.controlTheGame.scores;
+            currentScore += number;
+            localStorage.setItem("score-" + model.controlTheGame.currentPlayerID, currentScore);
         },
 
         init: () => {
@@ -196,7 +204,8 @@ document.addEventListener('DOMContentLoaded', function () {
             //Name of the player
             let nameOfPlayerEle
             let nameOfPlayerElement = document.getElementById('player_name');
-            nameOfPlayerElement.innerHTML = `<h3>${octupus.getNameOfPlayer()}</h3>`;
+            let [playerName, score] = octupus.getNameOfPlayer();
+            nameOfPlayerElement.innerHTML = `<h3>${playerName}: ${score} scores</h3>`;
 
             //add controls to the game 
             let gameControlElement = document.getElementById("game_control");
