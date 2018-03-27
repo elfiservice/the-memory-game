@@ -24,7 +24,8 @@ document.addEventListener('DOMContentLoaded', function () {
             'currentStarRating' : 3,
             'currentLevel' : 0,
             'scores' : 0,
-            'currentPlayerID' : 0
+            'currentPlayerID' : 0,
+            'currentPlayerName' : ''
         },
         starRating: function(number) {
             switch(number) {
@@ -98,9 +99,13 @@ document.addEventListener('DOMContentLoaded', function () {
             const numberOfStars = model.controlTheGame.currentStarRating;
             return model.starRating(numberOfStars);
         },
+        getNumOfStars: () => {
+            return model.controlTheGame.currentStarRating;
+        },
         setNameOfPlayer: (name) => {
             var uniqueId = (new Date).getTime(); 
             model.controlTheGame.currentPlayerID = uniqueId;
+            model.controlTheGame.currentPlayerName = name;
             let playerData = [];
             playerData[0] = name;
             playerData[1] = '0';
@@ -122,9 +127,14 @@ document.addEventListener('DOMContentLoaded', function () {
             return playerList;
         },
         setScore: (number) => {
-            let currentScore = model.controlTheGame.scores;
-            currentScore += number;
-            localStorage.setItem("score-" + model.controlTheGame.currentPlayerID, currentScore);
+            model.controlTheGame.scores += number;
+            const playerName = model.controlTheGame.currentPlayerName;
+            const playerScore = model.controlTheGame.scores;
+            let playerData = [];
+            playerData[0] = playerName;
+            playerData[1] = playerScore;
+  
+            localStorage.setItem("player-" + model.controlTheGame.currentPlayerID, JSON.stringify(playerData));
         },
 
         init: () => {
@@ -204,8 +214,7 @@ document.addEventListener('DOMContentLoaded', function () {
             //Name of the player
             let nameOfPlayerEle
             let nameOfPlayerElement = document.getElementById('player_name');
-            let [playerName, score] = octupus.getNameOfPlayer();
-            nameOfPlayerElement.innerHTML = `<h3>${playerName}: ${score} scores</h3>`;
+            nameOfPlayerElement.innerHTML = view.showPlayerData();
 
             //add controls to the game 
             let gameControlElement = document.getElementById("game_control");
@@ -306,6 +315,10 @@ document.addEventListener('DOMContentLoaded', function () {
                         hideCard2.offsetParent.parentElement.classList.add("jump");
                         resetCards();
                         octupus.setCardShownCounter();
+                        //score up the player
+                        octupus.setScore(5);
+                        nameOfPlayerElement.innerHTML = view.showPlayerData();
+
                         checkEndTheGame();
                         
                     } else {
@@ -447,11 +460,24 @@ document.addEventListener('DOMContentLoaded', function () {
             function setNextLevel() {
                 const currentlyLevel = octupus.getLevel();
                 if(currentlyLevel == 0) {
+                    checkScores();
                     startNextLevel(1);
                 } else if(currentlyLevel == 1) {
+                    checkScores();
                     startNextLevel(2);
                 } else {
-                    startNextLevel(0);
+                    checkScores();
+                    resetGame(0);
+                }
+
+                function checkScores() {
+                    const numOfStars = octupus.getNumOfStars();
+                    switch(numOfStars) {
+                        case 3: octupus.setScore(10); break;
+                        case 2: octupus.setScore(5); break;
+                        case 1: octupus.setScore(2); break;
+                    }
+                    nameOfPlayerElement.innerHTML = view.showPlayerData();
                 }
             }
         },
@@ -492,6 +518,10 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             return fragment;
+        },
+        showPlayerData: () => {
+            let [playerName, score] = octupus.getNameOfPlayer();
+            return `<h3>${playerName}: ${score} scores</h3>`;
         }
     }
 
