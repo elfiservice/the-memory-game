@@ -107,7 +107,17 @@ document.addEventListener('DOMContentLoaded', function () {
         getNameOfPlayer: () => {
             return localStorage.getItem("player-" + model.controlTheGame.currentPlayerID);
         },
-        
+        getRanking: () => {
+            let playerList = "";
+            for (var i = 0; i < localStorage.length; i++){
+                let stringKey = localStorage.key(i);
+                if(stringKey.indexOf('player-') > -1) {
+                    let player = localStorage.getItem(localStorage.key(i));
+                    playerList += `<li> ${player} </li>`;
+                }
+            }
+            return playerList;
+        },
 
         init: () => {
             view.init();
@@ -127,15 +137,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             //List of Players - Ranking
             let playerListElement = document.createElement('ul');
-            let playerList = "";
-            for (var i = 0; i < localStorage.length; i++){
-                let stringKey = localStorage.key(i);
-                if(stringKey.indexOf('player-') > -1) {
-                    let player = localStorage.getItem(localStorage.key(i));
-                    playerList += `<li> ${player} </li>`;
-                }
-            }
-            playerListElement.innerHTML = playerList;
+            playerListElement.innerHTML = octupus.getRanking();
             modalGameContentElement.appendChild(playerListElement);
             
             //show the model on the screen
