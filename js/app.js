@@ -150,7 +150,8 @@ document.addEventListener('DOMContentLoaded', function () {
             //input form ot get name of the player before start the game
             let contentAddNamePlayer = '<h2>Let\'s get started</h2>' +
             '<p></label> <input id="name_of_player" value="" type="text" placeholder="your nickname" required>' +
-                '<button class="save_name_player_btn" > Go! </button></p>';
+                '<button class="save_name_player_btn" > Go! </button></p>' +
+                '<h3>Last Players Scores</h3>';
             modalGameContentElement.innerHTML = contentAddNamePlayer;
 
             //List of Players - Ranking

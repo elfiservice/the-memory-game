@@ -79,6 +79,9 @@ td {
 
 .modal_game_content ul {
     text-align: left;
+    padding-left: 0;
+    max-width: 30%;
+    margin: 0 auto;
 }
 
 .modal_game_content li {
@@ -269,5 +272,10 @@ td {
     .grid_container {
         width: 95%;
     }
+
+    .modal_game_content ul {
+        max-width: 80%;
+    }
+
 }
 
