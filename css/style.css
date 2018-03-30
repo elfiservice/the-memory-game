@@ -85,6 +85,28 @@ td {
     list-style: none;
 }
 
+.modal_game_content input {
+    font-size:18px;
+    padding:10px 10px 10px 5px;
+    display:block;
+    width:300px;
+    border:none;
+    border-bottom:1px solid #757575;
+    margin: 10px auto;
+}
+
+.save_name_player_btn {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 10px 0;
+}
+
 /*CONTROL DE GAME*/
 
 #game_control {
