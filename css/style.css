@@ -52,7 +52,7 @@ td {
     display: none;
 }
 
-/*MODAL END THE GAME*/
+/*MODAL TO THE GAME*/
 
 .modal_game {
     position: fixed;
@@ -75,6 +75,14 @@ td {
     position: relative;
     padding: 30px;
     min-height: 200px;
+}
+
+.modal_game_content ul {
+    text-align: left;
+}
+
+.modal_game_content li {
+    list-style: none;
 }
 
 /*CONTROL DE GAME*/
@@ -209,6 +217,7 @@ td {
     animation: jump 1s ease-in 0s 1 normal ;
 }
 
+/* BTN STYLES  */
 #next_level_btn {
     padding: 10px;
     border: 1px solid;
@@ -224,6 +233,9 @@ td {
     margin: 20px auto;
     margin-bottom: 0;
 }
+
+/* RANK LIST  */
+
 
 /* Ajust the width the grid */
 @media (max-width: 660px) {
