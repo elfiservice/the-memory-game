@@ -105,6 +105,11 @@ td {
     display: inline-block;
     font-size: 16px;
     margin: 10px 0;
+    cursor: pointer;
+}
+
+.save_name_player_btn:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
 
 /*CONTROL DE GAME*/
