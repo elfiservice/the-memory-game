@@ -91,6 +91,7 @@ document.addEventListener('DOMContentLoaded', function () {
             model.controlTheGame.cardsShown = 0;
             model.controlTheGame.currentStarRating = 3;
             model.controlTheGame.currentLevel = levelToSet;
+            model.controlTheGame.scores = 0;
         },
         setStarRating: (numOfStarsRating) => {
             model.controlTheGame.currentStarRating = numOfStarsRating;
@@ -213,7 +214,6 @@ document.addEventListener('DOMContentLoaded', function () {
             gridElement.appendChild(fragmentBuilded);
 
             //Name of the player
-            let nameOfPlayerEle
             let nameOfPlayerElement = document.getElementById('player_name');
             nameOfPlayerElement.innerHTML = view.showPlayerData();
 
@@ -478,6 +478,15 @@ document.addEventListener('DOMContentLoaded', function () {
                         case 2: octupus.setScore(5); break;
                         case 1: octupus.setScore(2); break;
                     }
+console.log(parseInt(sMins));
+
+                    if(parseInt(sMins) == 00) {
+                        octupus.setScore(5)
+                    } else if(parseInt(sMins) == 01) {
+                        octupus.setScore(3);
+                    }
+
+
                     nameOfPlayerElement.innerHTML = view.showPlayerData();
                 }
             }
