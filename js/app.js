@@ -473,16 +473,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 function checkScores() {
                     const numOfStars = octupus.getNumOfStars();
+                    const minutesAgo = parseInt(sMins);
                     switch(numOfStars) {
                         case 3: octupus.setScore(10); break;
                         case 2: octupus.setScore(5); break;
                         case 1: octupus.setScore(2); break;
                     }
-console.log(parseInt(sMins));
 
-                    if(parseInt(sMins) == 00) {
+                    
+                    if(minutesAgo == 00) {
                         octupus.setScore(5)
-                    } else if(parseInt(sMins) == 01) {
+                    } else if(minutesAgo == 01) {
                         octupus.setScore(3);
                     }
 
