@@ -9,7 +9,7 @@ self.addEventListener('install', event => {
         caches.open(staticCacheName).then(function(cache) {
 
             let arrayToCache = [
-                '/',
+                
                 'index.html',
                 'images/bananaman.gif',
                 'images/green-gobbler.png',
